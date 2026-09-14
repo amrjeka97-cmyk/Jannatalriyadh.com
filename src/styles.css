@@ -1,0 +1,226 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * جنات الرياض — Luxury Landscape design system
+ * Deep natural green + warm sand/beige + subtle gold.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-deep: var(--primary-deep);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-gold: var(--gold);
+  --color-sand: var(--sand);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-whatsapp: var(--whatsapp);
+  --font-sans: "Tajawal", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cairo", "Tajawal", ui-sans-serif, sans-serif;
+  --shadow-soft: 0 10px 30px -12px oklch(0.32 0.06 152 / 0.25);
+  --shadow-lift: 0 22px 55px -22px oklch(0.32 0.06 152 / 0.4);
+}
+
+:root {
+  --radius: 1rem;
+  --background: oklch(0.99 0.006 106);
+  --foreground: oklch(0.22 0.03 152);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.03 152);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.03 152);
+  --primary: oklch(0.42 0.093 152);
+  --primary-deep: oklch(0.28 0.06 152);
+  --primary-foreground: oklch(0.985 0.01 106);
+  --secondary: oklch(0.955 0.018 100);
+  --secondary-foreground: oklch(0.3 0.05 152);
+  --muted: oklch(0.96 0.012 106);
+  --muted-foreground: oklch(0.5 0.02 140);
+  --accent: oklch(0.93 0.035 130);
+  --accent-foreground: oklch(0.28 0.06 152);
+  --gold: oklch(0.75 0.1 85);
+  --sand: oklch(0.93 0.028 85);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.9 0.015 120);
+  --input: oklch(0.9 0.015 120);
+  --ring: oklch(0.42 0.093 152);
+  --whatsapp: oklch(0.66 0.16 150);
+}
+
+.dark {
+  --background: oklch(0.17 0.02 152);
+  --foreground: oklch(0.96 0.01 106);
+  --card: oklch(0.22 0.028 152);
+  --card-foreground: oklch(0.96 0.01 106);
+  --popover: oklch(0.22 0.028 152);
+  --popover-foreground: oklch(0.96 0.01 106);
+  --primary: oklch(0.62 0.11 152);
+  --primary-deep: oklch(0.3 0.06 152);
+  --primary-foreground: oklch(0.15 0.02 152);
+  --secondary: oklch(0.26 0.03 152);
+  --secondary-foreground: oklch(0.96 0.01 106);
+  --muted: oklch(0.26 0.03 152);
+  --muted-foreground: oklch(0.72 0.02 120);
+  --accent: oklch(0.3 0.04 152);
+  --accent-foreground: oklch(0.96 0.01 106);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.62 0.11 152);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    max-width: 100vw;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  img,
+  video,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.35;
+  }
+}
+
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+}
+
+@utility section-y {
+  padding-block: 4.5rem;
+  @media (min-width: 768px) {
+    padding-block: 6rem;
+  }
+}
+
+@utility gold-line {
+  width: 3.5rem;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold), var(--primary));
+}
+
+@utility hero-overlay {
+  background: linear-gradient(
+    180deg,
+    oklch(0.18 0.03 152 / 0.72) 0%,
+    oklch(0.18 0.03 152 / 0.55) 45%,
+    oklch(0.16 0.03 152 / 0.9) 100%
+  );
+}
+
+/* Home hero: layered natural gradient — keeps footage visible, text crisp. */
+@utility hero-cinematic {
+  background:
+    radial-gradient(120% 90% at 85% 15%, oklch(0.75 0.1 85 / 0.14) 0%, transparent 60%),
+    linear-gradient(
+      to left,
+      oklch(0.15 0.03 152 / 0.82) 0%,
+      oklch(0.15 0.03 152 / 0.55) 45%,
+      oklch(0.15 0.03 152 / 0.2) 100%
+    ),
+    linear-gradient(
+      180deg,
+      oklch(0.14 0.03 152 / 0.6) 0%,
+      oklch(0.14 0.03 152 / 0.28) 40%,
+      oklch(0.13 0.025 152 / 0.85) 100%
+    );
+}
+
+@utility text-shadow-hero {
+  text-shadow: 0 2px 18px oklch(0.13 0.03 152 / 0.55);
+}
+
+@utility surface-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lift);
+  }
+}
+
+@utility reveal {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+
+  &[data-visible="false"] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: none;
+  }
+
+  &[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
