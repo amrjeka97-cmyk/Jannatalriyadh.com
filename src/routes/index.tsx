@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import heroPoster from "@/assets/hero-video-poster.webp";
-import aboutTeam from "@/assets/garden-maintenance-team-riyadh.webp";
+import aboutTeam from "@/assets/service-card-new/garden-maintenance-team-riyadh.webp";
 import { Reveal } from "@/components/Reveal";
 import { ServiceShowcaseCard } from "@/components/ServiceShowcaseCard";
 import { Accordion, btn, Card, CTABand, SectionHeading } from "@/components/ui-kit";
@@ -29,7 +29,6 @@ import {
   gallery,
   generalFaqs,
   posts,
-  serviceCategories,
   servicesByGroup,
   site,
   telLink,
@@ -63,9 +62,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [cat, setCat] = useState("الكل");
   const [reviewRating, setReviewRating] = useState(0);
-  const shown = cat === "الكل" ? gallery : gallery.filter((g) => g.category === cat);
 
   return (
     <>
@@ -176,7 +173,7 @@ function Index() {
               center={false}
               eyebrow="من نحن"
               title="شركة متخصصة في تنسيق الحدائق بالرياض"
-              desc={`${site.nameAr} فريق متخصص في تصميم وتنفيذ الحدائق والمساحات الخارجية، نعمل بخبرة ${site.years} عامًا وأنجزنا أكثر من ${site.projects} مشروعًا داخل الرياض بين فلل ومنازل واستراحات ومشاريع تجارية.`}
+              desc={`${site.nameAr} فريق متخصص في تصميم وتنفيذ الحدائق والمساحات الخارجية، نعمل بخبرة ${site.years} عامًا وأنجزنا أكثر من ${site.projects} مشروعًا داخل وخارج الرياض بين فلل ومنازل واستراحات ومشاريع تجارية.`}
             />
             <ul className="mt-7 grid gap-3 sm:grid-cols-2">
               {[
@@ -235,33 +232,10 @@ function Index() {
             title="معرض مشاريع منفذة في الرياض"
             desc="نماذج من حدائق ومساحات خارجية نفذها فريقنا داخل مدينة الرياض."
           />
-          <div className="mt-9 flex flex-wrap justify-center gap-2">
-            {serviceCategories.map((c) => (
-              <button
-                key={c}
-                type="button"
-                onClick={() => setCat(c)}
-                className={`rounded-full px-4 py-2 text-sm font-bold transition ${
-                  cat === c
-                    ? "bg-primary text-primary-foreground"
-                    : "border border-border bg-card text-foreground hover:bg-accent"
-                }`}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {shown.map((g, i) => (
-              <Reveal key={`${g.alt}-${i}`} delay={(i % 3) * 70}>
-                <figure className="group overflow-hidden rounded-[var(--radius-2xl)] border border-border shadow-[var(--shadow-soft)]">
-                  <img
-                    src={g.thumbnailImage ?? g.projectImage}
-                    alt={g.alt}
-                    className="h-60 w-full object-cover transition duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </figure>
+          <div className="mt-8 space-y-6 md:space-y-8">
+            {galleryRows.map((row, i) => (
+              <Reveal key={`gallery-row-${i}`} delay={i * 100}>
+                <GalleryCarousel images={row} label={`صف معرض الأعمال ${i + 1}`} />
               </Reveal>
             ))}
           </div>
@@ -457,5 +431,150 @@ function Index() {
 
       <CTABand />
     </>
+  );
+}
+
+const gallerySplit = Math.ceil(gallery.length / 2);
+const galleryRows = [gallery.slice(0, gallerySplit), gallery.slice(gallerySplit)];
+
+function GalleryCarousel({ images, label }: { images: typeof gallery; label: string }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const swipeStartX = useRef<number | null>(null);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotionPreference = () => setPrefersReducedMotion(mediaQuery.matches);
+
+    updateMotionPreference();
+    mediaQuery.addEventListener("change", updateMotionPreference);
+    return () => mediaQuery.removeEventListener("change", updateMotionPreference);
+  }, []);
+
+  useEffect(() => {
+    if (isHovered || isFocused || prefersReducedMotion || images.length < 2) return;
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((index) => (index + 1) % images.length);
+    }, 3000);
+
+    return () => window.clearInterval(intervalId);
+  }, [activeIndex, images.length, isFocused, isHovered, prefersReducedMotion]);
+
+  const moveBy = (step: number) => {
+    if (images.length < 2) return;
+    setActiveIndex((index) => (index + step + images.length) % images.length);
+  };
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "touch") return;
+    swipeStartX.current = event.clientX;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    if (swipeStartX.current === null) return;
+
+    const distance = event.clientX - swipeStartX.current;
+    swipeStartX.current = null;
+
+    if (Math.abs(distance) < 45) return;
+    moveBy(distance < 0 ? 1 : -1);
+  };
+
+  return (
+    <div
+      role="region"
+      aria-label={label}
+      aria-roledescription="carousel"
+      className="overflow-hidden rounded-[var(--radius-2xl)] border border-border bg-card shadow-[var(--shadow-soft)]"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocusCapture={() => setIsFocused(true)}
+      onBlurCapture={(event) => {
+        if (
+          !(event.relatedTarget instanceof Node) ||
+          !event.currentTarget.contains(event.relatedTarget)
+        ) {
+          setIsFocused(false);
+        }
+      }}
+    >
+      <div
+        className="relative aspect-[4/3] overflow-hidden bg-secondary sm:aspect-[16/9] touch-pan-y"
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={() => {
+          swipeStartX.current = null;
+        }}
+      >
+        {images.map((image, index) => {
+          const isActive = index === activeIndex;
+
+          return (
+            <div
+              key={`${image.alt}-${index}`}
+              aria-hidden={!isActive}
+              className={`absolute inset-0 transition-opacity ease-in-out ${
+                prefersReducedMotion ? "duration-0" : "duration-500"
+              } ${isActive ? "opacity-100" : "pointer-events-none opacity-0"}`}
+            >
+              <img
+                src={image.projectImage}
+                alt={image.alt}
+                className="size-full select-none object-contain"
+                loading={isActive ? "eager" : "lazy"}
+                decoding="async"
+                draggable={false}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex items-center justify-between gap-4 border-t border-border px-4 py-3">
+        <button
+          type="button"
+          onClick={() => moveBy(-1)}
+          aria-label="الصورة السابقة"
+          className="grid size-11 shrink-0 place-items-center rounded-full border border-border bg-background text-foreground transition hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5">
+            <path
+              d="m9 18 6-6-6-6"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+            />
+          </svg>
+        </button>
+        <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary">
+          <span
+            className="block h-full rounded-full bg-primary transition-[width] duration-300"
+            style={{ width: `${((activeIndex + 1) / images.length) * 100}%` }}
+          />
+        </span>
+        <button
+          type="button"
+          onClick={() => moveBy(1)}
+          aria-label="الصورة التالية"
+          className="grid size-11 shrink-0 place-items-center rounded-full border border-border bg-background text-foreground transition hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" className="size-5">
+            <path
+              d="m15 18-6-6 6-6"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
   );
 }

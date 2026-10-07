@@ -14,6 +14,7 @@ import {
   servicesByGroup,
   services,
   serviceGroups,
+  serviceHeroImages,
   site,
   telLink,
   waLink,
@@ -200,8 +201,8 @@ function ServiceDetail() {
       <PageHero
         title={`${service.title} بالرياض`}
         desc={service.intro}
-        image={service.serviceImage}
-        imageAlt={service.imageAlt}
+        image={serviceHeroImages[service.slug] ?? service.serviceImage}
+        imageAlt={service.imageAlt ?? ""}
         crumbs={[
           { label: "الرئيسية", to: "/" },
           { label: "خدماتنا", to: "/services" },

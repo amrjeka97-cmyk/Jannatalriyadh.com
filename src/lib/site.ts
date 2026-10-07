@@ -23,6 +23,16 @@ import pergolaThumb from "@/assets/garden-pergola-riyadh-thumb.webp";
 import waterfallThumb from "@/assets/garden-waterfall-riyadh-thumb.webp";
 import palmsThumb from "@/assets/palm-tree-landscaping-riyadh-thumb.webp";
 import plantersThumb from "@/assets/garden-planters-riyadh-thumb.webp";
+import serviceCardGardenLandscape from "@/assets/service-card-new/garden-landscape-design-riyadh.webp";
+import serviceCardPlantingGardening from "@/assets/service-card-new/palm-tree-landscaping-riyadh.webp";
+import serviceHeroPalmPlanting from "@/assets/service-card-new/palm-tree-planting-riyadh.webp";
+import serviceCardNaturalTurfThumb from "@/assets/service-card-new/natural-turf-riyadh-thumb.webp";
+import serviceCardNaturalTurf from "@/assets/service-card-new/natural-turf-installation-riyadh.webp";
+import serviceCardGardenMaintenanceThumb from "@/assets/service-card-new/garden-maintenance-team-riyadh-thumb.webp";
+import serviceCardGardenMaintenance from "@/assets/service-card-new/garden-maintenance-team-riyadh.webp";
+import serviceCardShadeSeating from "@/assets/service-card-new/pergolas-and-shades-riyadh.webp";
+import serviceHeroArtificialGrass from "@/assets/service-card-new/artificial-grass-installation-riyadh.webp";
+import serviceHeroGlassRoom from "@/assets/service-card-new/glass-room-garden-annex-riyadh.webp";
 
 import projectGardenDesign from "@/assets/portfolio/project-garden-design-riyadh.jpg";
 import projectNaturalTurf from "@/assets/portfolio/project-natural-turf-riyadh.jpg";
@@ -69,6 +79,15 @@ import articleSeatingThumb from "@/assets/articles/article-outdoor-seating-riyad
 import articlePergolaThumb from "@/assets/articles/article-pergola-riyadh-thumb.webp";
 
 import { serviceSlotImage } from "@/lib/service-image-slots";
+
+const newServiceGalleryImages = import.meta.glob("/src/assets/service-gallery-new/*", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>;
+
+const serviceGalleryImage = (filename: string): string =>
+  newServiceGalleryImages[`/src/assets/service-gallery-new/${filename}`] ?? landscape;
 
 export const site = {
   nameAr: "جنات الرياض",
@@ -123,6 +142,7 @@ export type ServiceContentSection = {
   title: string;
   description: string;
   image?: string;
+  thumbnailImage?: string;
   alt?: string;
   details?: string[];
 };
@@ -281,37 +301,6 @@ const rawServices: Service[] = [
       {
         q: "هل تناسب الخدمة المداخل والحدائق؟",
         a: "نعم، نوزع الحل وفق حركة الموقع سواء كان ممر حديقة أو مدخل فيلا أو منطقة جلسة.",
-      },
-    ],
-  },
-  {
-    slug: "garden-aesthetic-elements",
-    title: "العناصر الجمالية",
-    short:
-      "إضافة تفاصيل بصرية مدروسة مثل الإضاءة والعناصر المائية والحواف لإكمال شخصية المساحة الخارجية.",
-    metaTitle: "العناصر الجمالية للحدائق بالرياض | جنات الرياض",
-    metaDescription:
-      "تنفيذ العناصر الجمالية للحدائق بالرياض بدمج الإضاءة والعناصر المائية والتفاصيل المكملة لتصميم متوازن وغير مزدحم.",
-    serviceImage: waterfall,
-    category: "الحدائق واللاندسكيب",
-    intro:
-      "العناصر الجمالية هي اللمسات التي تربط أجزاء الحديقة وتمنحها حضورًا واضحًا دون أن تطغى على الاستخدام اليومي.",
-    body: [
-      "نختار العنصر الجمالي بناءً على حجم المساحة ونقطة الرؤية والإضاءة الطبيعية، لا كإضافة منفصلة عن التصميم.",
-      "يمكن دمج إضاءة الحديقة أو عنصر مائي أو حواف وتفاصيل مميزة في نقاط محددة لإبراز المداخل والجلسات.",
-      "نحافظ على توازن التفاصيل حتى تبدو الحديقة مرتبة نهارًا ومريحة بصريًا في المساء.",
-    ],
-    features: [
-      "تفاصيل مرتبطة بالتصميم",
-      "إبراز المداخل والجلسات",
-      "توازن بصري دون ازدحام",
-      "اختيارات مناسبة للواجهة",
-    ],
-    options: ["إضاءة حدائق", "عناصر مائية", "حواف وتفاصيل جمالية"],
-    faqs: [
-      {
-        q: "هل تنفذ العناصر الجمالية ضمن مشروع متكامل؟",
-        a: "نعم، نحدد موقعها وحجمها ضمن مخطط الحديقة حتى تخدم المشهد ولا تعيق الاستخدام.",
       },
     ],
   },
@@ -520,7 +509,10 @@ const rawServices: Service[] = [
         q: "هل هذا النظام يؤثر على الجدار؟",
         a: "لا إذا تم تركيب الهيكل المناسب وعزل التلامسات بشكل صحيح.",
       },
-      { q: "هل يحتاج إلى ري؟", a: "في الخيارات الطبيعية نعم، وفي الصناعي تكون الحاجة أقل." },
+      {
+        q: "هل يحتاج إلى ري؟",
+        a: "لا يحتاج إلى الري، لأنه يتكون من خامات صناعية وليس ثيل طبيعي، كما أنه مقاوم للحرارة والرطوبة ويحافظ على مظهره الجمالي لفترة طويلة دون أي عناية مائية.",
+      },
     ],
   },
   {
@@ -1097,43 +1089,12 @@ const rawServices: Service[] = [
     faqs: [
       {
         q: "هل تحتاج هذه الأحواض إلى أساسات؟",
-        a: "غالبًا لا، لأنها خفيفة مقارنة بالأحواض الحجرية أو الخرسانية.",
+        a: "غالبًا لا، لأنها خفيفة مقارنة بالأحواض الخرسانية.",
       },
       {
         q: "هل يمكن استخدامها في الواجهات؟",
         a: "نعم، وهي مناسبة جدًا للواجهة والحدائق الواسعة أو الصغيرة.",
       },
-    ],
-  },
-  {
-    slug: "ahwad-hajariya",
-    title: "أحواض حجرية",
-    short: "أحواض حجرية متينة وجاهزة لبناء منظومة حديقة أنيقة ومتعددة الارتفاعات.",
-    metaTitle: "أحواض حجرية بالرياض | خدمات الأحواض | جنات الرياض",
-    metaDescription:
-      "أحواض حجرية بالرياض بنمط متين ومناسب للحدائق الكبيرة، مع لمسات تصميمية تعطي الحديقة طابعًا فخمًا ودائمًا.",
-    serviceImage: planters,
-    category: "الأحواض الزراعية",
-    intro:
-      "الأحواض الحجرية تعطي الحديقة طابعًا دائمًا وثابتًا، وتناسب الطبيعة الرملية والنباتات المتوسطة إلى الكبيرة.",
-    body: [
-      "نُبني الحوض حسب التدرج الطبوغرافي للمنطقة ونحدد الحافة المناسبة للمناسيب والممرات.",
-      "نقوم بترتيب التربة ومواد العزل مع ترك مساحة مناسبة للنبات المتوازن داخل الحوض.",
-      "كما نُضيف عمقًا مناسبًا للتجذير مع المدى البصري المطلوب من الحديقة.",
-    ],
-    features: [
-      "متانة وملساء مستديمة",
-      "مظهر فخم وملائم للواجهة",
-      "استقرار في المساحات الكبيرة",
-      "قابلية للتخطيط الجمالي",
-    ],
-    options: ["أحواض كبيرة", "أحواض قريبة من الجلسة", "أحواض علوية", "أحواض حدودية"],
-    faqs: [
-      {
-        q: "هل يمكن توصيلها بنظام الري؟",
-        a: "نعم، وهي عادةً تتكامل مع نظام الري بالتنقيط لتسهيل الصيانة.",
-      },
-      { q: "هل تستمر سنوات طويلة؟", a: "نعم، إذا تم التنفيذ بشكل صحيح ومن مواد صحية." },
     ],
   },
   {
@@ -1178,7 +1139,6 @@ const serviceMainImageSlots: Record<string, string> = {
   "amal-landscape": "hardscape-riyadh",
   "softscape-riyadh": "softscape-riyadh",
   "pathways-flooring-riyadh": "garden-pathways-flooring-riyadh",
-  "garden-aesthetic-elements": "garden-decorative-elements-riyadh",
   "zira3at-al-ashjar": "tree-planting-riyadh",
   "zira3at-al-nakheel": "palm-planting-riyadh",
   "zira3at-al-zohor": "flower-planting-riyadh",
@@ -1201,7 +1161,6 @@ const serviceMainImageSlots: Record<string, string> = {
   "mazallat-bergolat": "pergolas-shades-riyadh",
   "al-ghuraf-al-zujajiya": "glass-rooms-riyadh",
   "ahwad-fayber-glass": "fiberglass-planters-riyadh",
-  "ahwad-hajariya": "stone-planters-riyadh",
   "ahwad-blok-kharsaniya": "concrete-planters-riyadh",
 };
 
@@ -1209,7 +1168,6 @@ const serviceMainImagePaths: Record<string, string> = {
   "amal-landscape": "/service-images/hardscape-installation-riyadh.webp",
   "softscape-riyadh": "/service-images/softscape-landscaping-riyadh.webp",
   "pathways-flooring-riyadh": "/service-images/garden-pathways-flooring-riyadh.webp",
-  "garden-aesthetic-elements": "/service-images/garden-aesthetic-elements-riyadh.webp",
   "zira3at-al-ashjar": "/service-images/tree-planting-riyadh.webp",
   "zira3at-al-nakheel": "/service-images/palm-planting-riyadh.webp",
   "zira3at-al-zohor": "/service-images/flower-planting-riyadh.webp",
@@ -1231,7 +1189,6 @@ const serviceMainImagePaths: Record<string, string> = {
   "mazallat-bergolat": "/service-images/pergolas-shades-riyadh.webp",
   "al-ghuraf-al-zujajiya": "/service-images/glass-room-riyadh.webp",
   "ahwad-fayber-glass": "/service-images/fiberglass-planters-riyadh.webp",
-  "ahwad-hajariya": "/service-images/stone-planters-riyadh.webp",
   "ahwad-blok-kharsaniya": "/service-images/concrete-planters-riyadh.webp",
 };
 
@@ -1239,7 +1196,6 @@ const serviceImageAlts: Record<string, string> = {
   "amal-landscape": "تنفيذ أعمال الهاردسكيب وتنسيق الأرضيات في حديقة منزل بالرياض",
   "softscape-riyadh": "تنسيق وزراعة المساحات الخضراء في حديقة منزل بالرياض",
   "pathways-flooring-riyadh": "تنفيذ ممرات وأرضيات حدائق بتنسيق عصري في الرياض",
-  "garden-aesthetic-elements": "عناصر جمالية وديكورية ضمن تنسيق حديقة منزلية في الرياض",
   "zira3at-al-ashjar": "زراعة وتنسيق الأشجار في حديقة منزلية بالرياض",
   "zira3at-al-nakheel": "زراعة وتنسيق النخيل في حدائق المنازل بالرياض",
   "zira3at-al-zohor": "زراعة وتنسيق الزهور والنباتات الزينة في حديقة بالرياض",
@@ -1261,7 +1217,6 @@ const serviceImageAlts: Record<string, string> = {
   "mazallat-bergolat": "تنفيذ برجولة ومظلة لجلسة خارجية في حديقة بالرياض",
   "al-ghuraf-al-zujajiya": "غرفة زجاجية حديثة داخل حديقة منزلية في الرياض",
   "ahwad-fayber-glass": "أحواض زراعة فايبر جلاس للنباتات والحدائق في الرياض",
-  "ahwad-hajariya": "أحواض زراعة حجرية لتنسيق الحدائق في الرياض",
   "ahwad-blok-kharsaniya": "أحواض زراعة من البلوك والخرسانة ضمن حديقة منزلية بالرياض",
 };
 
@@ -1271,8 +1226,18 @@ export const services: Service[] = rawServices.map((service) => ({
     ? service.serviceImage
     : (serviceMainImagePaths[service.slug] ??
       serviceSlotImage(serviceMainImageSlots[service.slug] ?? service.slug)),
-  imageAlt: serviceImageAlts[service.slug],
+  imageAlt: serviceImageAlts[service.slug] ?? "",
 }));
+
+export const serviceHeroImages: Partial<Record<string, string>> = {
+  "mazallat-bergolat": serviceCardShadeSeating,
+  "tanseeq-hadaeq": serviceCardGardenLandscape,
+  "3oshb-sina3i": serviceHeroArtificialGrass,
+  "theel-tabee3i": serviceCardNaturalTurf,
+  "zira3at-al-nakheel": serviceHeroPalmPlanting,
+  "al-ghuraf-al-zujajiya": serviceHeroGlassRoom,
+};
+
 const serviceImageFor = (slug: string) =>
   services.find((service) => service.slug === slug)?.serviceImage;
 export const serviceCategories = [
@@ -1578,7 +1543,7 @@ export const posts: Post[] = [
       "## أهمية الظل والخصوصية",
       "الظل والخصوصية عنصران يحددان موقع الجلسة أكثر من الشكل نفسه. استخدام [المظلات والبرجولات](/services/mazallat-bergolat) يضيف طابعًا خاصًا ويحمي المساحة.",
       "## دور الإضاءة",
-      "الإضاءة الدافئة المنخفضة ترفع مستوى الجلسة وتبرز [العناصر الجمالية](/services/garden-aesthetic-elements) أكثر من أي عنصر ديكوري آخر.",
+      "الإضاءة الدافئة المنخفضة ترفع مستوى الجلسة وتبرز التفاصيل الديكورية في الحديقة أكثر من أي عنصر ديكوري آخر.",
     ],
   },
   {
@@ -1875,16 +1840,6 @@ const rawServiceGalleries: Record<string, ServiceGalleryItem[]> = {
       alt: "أرضيات خارجية حول مسطح أخضر",
     },
   ],
-  "garden-aesthetic-elements": [
-    {
-      image: projectWaterfall,
-      alt: "عنصر مائي جمالي في حديقة",
-    },
-    {
-      image: projectPergola,
-      alt: "إضاءة وتفاصيل جمالية في مساحة خارجية",
-    },
-  ],
   "zira3at-al-ashjar": [
     {
       image: projectGardenDesign,
@@ -1968,16 +1923,6 @@ const rawServiceGalleries: Record<string, ServiceGalleryItem[]> = {
     { image: planters, alt: "أحواض فايبر جلاس للنباتات" },
     { image: projectGreenwall, alt: "أحواض نباتية في فناء" },
   ],
-  "ahwad-hajariya": [
-    {
-      image: projectLandscape,
-      alt: "حوض حجري ضمن تنسيق خارجي",
-    },
-    {
-      image: projectGardenDesign,
-      alt: "أحواض زراعية حول حديقة",
-    },
-  ],
   "ahwad-blok-kharsaniya": [
     {
       image: projectLandscape,
@@ -2054,19 +1999,96 @@ const sectionImageSlots: Record<string, string[]> = {
   ],
 };
 
+const serviceSectionImageFiles: Record<string, string[]> = {
+  "tanseeq-hadaeq": [
+    "villa-garden-landscaping-riyadh.webp",
+    "public-garden-landscaping-riyadh.webp",
+  ],
+  "amal-landscape": [
+    "hardscape-pathways-flooring-riyadh.webp",
+    "hardscape-outdoor-seating-base-riyadh.webp",
+    "hardscape-outdoor-lighting-riyadh.webp",
+  ],
+  "zira3at-al-ashjar": [
+    "shade-trees-planting-riyadh.webp",
+    "ornamental-trees-planting-riyadh.webp",
+    "fruit-trees-planting-riyadh.webp",
+    "large-trees-planting-riyadh.webp",
+  ],
+  "zira3at-al-nakheel": [
+    "washingtonia-palm-planting-riyadh.webp",
+    "date-palm-planting-riyadh.webp",
+    "queen-palm-planting-riyadh.webp",
+    "canary-island-date-palm-riyadh.webp",
+    "palm-trees-landscape-design-riyadh.webp",
+    "ornamental-palm-planting-riyadh.webp",
+  ],
+  "zira3at-al-zohor": [
+    "seasonal-flower-planting-riyadh.webp",
+    "ornamental-flower-garden-riyadh.webp",
+    "flower-planting-project-riyadh.webp",
+    "flower-bed-landscaping-riyadh.webp",
+    "flower-border-garden-riyadh.webp",
+  ],
+  "3oshb-sina3i": [
+    "artificial-grass-villa-garden-riyadh.jpg",
+    "artificial-grass-balcony-riyadh.webp",
+    "artificial-grass-rooftop-riyadh.webp",
+    "artificial-grass-playground-riyadh.webp",
+    "artificial-grass-commercial-landscape-riyadh.webp",
+    "artificial-grass-installation-project-riyadh.webp",
+  ],
+  "al-3oshb-al-jidari-3d": [
+    "2d-green-wall-grass-riyadh.webp",
+    "3d-vertical-green-wall-riyadh.webp",
+  ],
+  "tasmeem-malaeb-riyadiya": [
+    "football-field-design-riyadh.webp",
+    "acrylic-sports-court-riyadh.webp",
+    "acrylic-sports-court-project-riyadh.webp",
+    "football-field-residential-riyadh.webp",
+    "sports-field-design-project-riyadh.webp",
+  ],
+  "ardiyat-mutrabiya": [
+    "rubber-flooring-project-riyadh.webp",
+    "rubber-flooring-playground-riyadh.webp",
+    "rubber-flooring-sports-area-riyadh.webp",
+  ],
+  "tanfeeth-shabakat-al-ray-automatik": [
+    "automatic-irrigation-system-riyadh.webp",
+    "modern-irrigation-project-riyadh.webp",
+    "smart-irrigation-remote-control-riyadh.webp",
+    "sprinkler-irrigation-zones-riyadh.webp",
+  ],
+  "al-shallalat": [
+    "garden-waterfall-natural-stone-riyadh.webp",
+    "garden-waterfall-riyadh_converted.webp",
+    "modern-garden-waterfall-riyadh.webp",
+  ],
+  "al-nawafeer": [
+    "garden-fountain-project-riyadh.webp",
+    "modern-garden-fountain-riyadh.webp",
+    "decorative-garden-fountain-riyadh.webp",
+  ],
+};
+
 export const serviceSections: Record<string, ServiceContentSection[]> = Object.fromEntries(
   Object.entries(sectionImageSlots).map(([slug, slots]) => [
     slug,
-    slots.map((slot, index) => ({
-      ...(rawServiceSections[slug]?.[index % rawServiceSections[slug].length] ?? {
-        title: "تطبيقات الخدمة",
-        description: "صورة تطبيقية مستقلة لهذا الاستخدام ضمن الخدمة.",
-      }),
-      image:
-        rawServiceSections[slug]?.[index % rawServiceSections[slug].length]?.image ??
-        serviceImageFor(slug) ??
-        landscape,
-    })),
+    slots.map((slot, index) => {
+      const section = rawServiceSections[slug]?.[index % rawServiceSections[slug].length];
+      const imageFile = serviceSectionImageFiles[slug]?.[index];
+
+      return {
+        ...(section ?? {
+          title: "تطبيقات الخدمة",
+          description: "صورة تطبيقية مستقلة لهذا الاستخدام ضمن الخدمة.",
+        }),
+        image: imageFile
+          ? serviceGalleryImage(imageFile)
+          : (section?.image ?? serviceImageFor(slug) ?? landscape),
+      };
+    }),
   ]),
 );
 
@@ -2085,11 +2107,6 @@ const galleryImageSlots: Record<string, string[]> = {
     "garden-walkways-riyadh",
     "garden-entrance-flooring-riyadh",
     "outdoor-seating-flooring-riyadh",
-  ],
-  "garden-aesthetic-elements": [
-    "garden-lighting-riyadh",
-    "garden-water-features-riyadh",
-    "garden-decorative-details-riyadh",
   ],
   "zira3at-al-ashjar": ["tree-planting-project-riyadh", "tree-landscaping-riyadh"],
   "zira3at-al-nakheel": ["palm-landscaping-riyadh", "palm-planting-project-riyadh"],
@@ -2143,18 +2160,182 @@ const galleryImageSlots: Record<string, string[]> = {
     "sliding-glass-doors-riyadh",
   ],
   "ahwad-fayber-glass": ["fiberglass-planters-modern-riyadh", "fiberglass-planters-gardens-riyadh"],
-  "ahwad-hajariya": ["natural-stone-planters-riyadh", "stone-planters-garden-riyadh"],
   "ahwad-blok-kharsaniya": ["block-planters-riyadh", "concrete-planters-construction-riyadh"],
 };
 
+const serviceGalleryImageFiles: Record<string, string[]> = {
+  "tanseeq-hadaeq": [
+    "residential-garden-landscaping-riyadh.webp.webp",
+    "villa-garden-landscaping-riyadh.webp",
+    "public-garden-landscaping-riyadh.webp",
+  ],
+  "amal-landscape": [
+    "hardscape-completed-garden-project-riyadh.webp",
+    "hardscape-pathways-flooring-riyadh.webp",
+    "hardscape-outdoor-seating-base-riyadh.webp",
+    "hardscape-outdoor-lighting-riyadh.webp",
+  ],
+  "softscape-riyadh": [
+    "softscape-garden-plants-riyadh.webp",
+    "softscape-landscape-planting-riyadh.webp",
+    "softscape-planting-design-riyadh.webp",
+    "softscape-residential-garden-riyadh.webp",
+  ],
+  "pathways-flooring-riyadh": [
+    "garden-flooring-design-riyadh.webp",
+    "garden-pathways-landscaping-riyadh.webp",
+    "garden-pathways-stone-flooring-riyadh.webp",
+    "garden-walkway-landscaping-riyadh.webp",
+  ],
+  "zira3at-al-ashjar": [
+    "fruit-trees-planting-riyadh.webp",
+    "large-trees-planting-riyadh.webp",
+    "ornamental-trees-planting-riyadh.webp",
+    "residential-tree-planting-riyadh.webp",
+    "shade-trees-planting-riyadh.webp",
+    "tree-planting-landscape-riyadh.webp",
+  ],
+  "zira3at-al-nakheel": [
+    "canary-island-date-palm-riyadh.webp",
+    "date-palm-planting-riyadh.webp",
+    "ornamental-palm-planting-riyadh.webp",
+    "palm-planting-project-riyadh.webp",
+    "palm-trees-landscape-design-riyadh.webp",
+    "queen-palm-planting-riyadh.webp",
+    "residential-palm-landscaping-riyadh.webp",
+    "washingtonia-palm-planting-riyadh.webp",
+  ],
+  "zira3at-al-zohor": [
+    "colorful-flowers-landscape-riyadh.webp",
+    "flower-bed-landscaping-riyadh.webp",
+    "flower-border-garden-riyadh.webp",
+    "flower-planting-project-riyadh.webp",
+    "ornamental-flower-garden-riyadh.webp",
+    "seasonal-flower-planting-riyadh.webp",
+  ],
+  "theel-tabee3i": [
+    "natural-turf-installation-project-riyadh.webp",
+    "natural-turf-landscaping-riyadh.webp",
+    "natural-turf-villa-garden-riyadh.webp",
+  ],
+  "3oshb-sina3i": [
+    "artificial-grass-balcony-riyadh.webp",
+    "artificial-grass-commercial-landscape-riyadh.webp",
+    "artificial-grass-installation-project-riyadh.webp",
+    "artificial-grass-outdoor-seating-riyadh.webp",
+    "artificial-grass-playground-riyadh.webp",
+    "artificial-grass-rooftop-riyadh.webp",
+    "artificial-grass-villa-garden-riyadh.jpg",
+  ],
+  "al-3oshb-al-jidari-3d": [
+    "2d-green-wall-grass-riyadh.webp",
+    "3d-green-wall-landscape-project-riyadh.webp",
+    "3d-green-wall-project-riyadh.webp",
+    "3d-vertical-green-wall-riyadh.webp",
+  ],
+  "qas-al-3oshb": ["lawn-mowing-garden-maintenance-riyadh.webp", "lawn-mowing-project-riyadh.webp"],
+  "qas-al-ashjar": [
+    "tree-pruning-garden-maintenance-riyadh.webp",
+    "tree-pruning-project-riyadh.webp",
+  ],
+  "takrib-al-nakheel": [
+    "palm-pruning-garden-maintenance-riyadh.webp",
+    "palm-pruning-project-riyadh.webp",
+  ],
+  "tanfeeth-shabakat-al-ray-yadawi": [
+    "manual-irrigation-garden-system-riyadh.webp",
+    "manual-irrigation-installation-project-riyadh.webp",
+  ],
+  "tanfeeth-shabakat-al-ray-automatik": [
+    "automatic-irrigation-system-riyadh.webp",
+    "modern-irrigation-project-riyadh.webp",
+    "smart-irrigation-garden-project-riyadh.webp",
+    "smart-irrigation-remote-control-riyadh.webp",
+    "sprinkler-irrigation-zones-riyadh.webp",
+  ],
+  "tanfeeth-shabakat-al-ray-tanqit": [
+    "drip-irrigation-garden-project-riyadh.webp",
+    "drip-irrigation-installation-project-riyadh.webp",
+  ],
+  "siyana-shabakat-al-ray": [
+    "irrigation-system-maintenance-project-riyadh.webp",
+    "irrigation-system-repair-garden-riyadh.webp",
+  ],
+  "tasmeem-malaeb-riyadiya": [
+    "acrylic-sports-court-project-riyadh.webp",
+    "acrylic-sports-court-riyadh.webp",
+    "football-field-design-riyadh.webp",
+    "football-field-residential-riyadh.webp",
+    "sports-field-completed-project-riyadh.webp",
+    "sports-field-design-project-riyadh.webp",
+  ],
+  "siyana-malaeb-riyadiya": [
+    "sports-field-maintenance-project-riyadh.webp",
+    "sports-field-maintenance-result-riyadh.webp",
+  ],
+  "ardiyat-mutrabiya": [
+    "rubber-flooring-outdoor-project-riyadh.webp",
+    "rubber-flooring-playground-riyadh.webp",
+    "rubber-flooring-project-riyadh.webp",
+    "rubber-flooring-sports-area-riyadh.webp",
+  ],
+  "al-shallalat": [
+    "garden-waterfall-natural-stone-riyadh.webp",
+    "garden-waterfall-riyadh_converted.webp",
+    "modern-garden-waterfall-riyadh.webp",
+    "waterfall-landscape-project-riyadh.webp",
+  ],
+  "al-nawafeer": ["garden-fountain-project-riyadh.webp", "modern-garden-fountain-riyadh.webp"],
+  "jalsat-kharijiya": [
+    "luxury-outdoor-seating-riyadh.webp",
+    "modern-outdoor-seating-riyadh.webp",
+    "outdoor-seating-garden-riyadh.webp",
+  ],
+  "mazallat-bergolat": [
+    "car-shade-pergola-riyadh.webp",
+    "garden-shade-riyadh.webp",
+    "luxury-pergola-riyadh.webp",
+    "modern-pergola-riyadh.webp",
+    "wooden-pergola-riyadh.webp",
+  ],
+  "al-ghuraf-al-zujajiya": [
+    "garden-glass-room-riyadh.webp",
+    "luxury-glass-room-riyadh.webp",
+    "modern-glass-room-riyadh.webp",
+  ],
+  "ahwad-fayber-glass": [
+    "fiberglass-planters-garden-riyadh.webp",
+    "modern-fiberglass-planters-riyadh.webp",
+  ],
+  "ahwad-blok-kharsaniya": [
+    "concrete-planter-boxes-riyadh.webp",
+    "modern-concrete-planters-riyadh.webp",
+  ],
+};
 export const serviceGalleries: Record<string, ServiceGalleryItem[]> = Object.fromEntries(
-  Object.entries(galleryImageSlots).map(([slug, slots]) => [
-    slug,
-    slots.map((slot, index) => ({
-      image: rawServiceGalleries[slug]?.[index]?.image ?? serviceImageFor(slug) ?? landscape,
-      alt: rawServiceGalleries[slug]?.[index]?.alt ?? `صورة تطبيقية مؤقتة لخدمة ${slug}`,
-    })),
-  ]),
+  [...new Set([...Object.keys(galleryImageSlots), ...Object.keys(serviceGalleryImageFiles)])].map(
+    (slug) => {
+      const imageFiles = serviceGalleryImageFiles[slug];
+      const slotCount = galleryImageSlots[slug]?.length ?? 0;
+      const serviceTitle = services.find((service) => service.slug === slug)?.title ?? "الخدمة";
+      const itemCount = imageFiles?.length ?? slotCount;
+
+      return [
+        slug,
+        Array.from({ length: itemCount }, (_, index) => {
+          const fileName = imageFiles?.[index];
+          return {
+            image: fileName
+              ? serviceGalleryImage(fileName)
+              : (rawServiceGalleries[slug]?.[index]?.image ?? serviceImageFor(slug) ?? landscape),
+            alt: imageFiles
+              ? (rawServiceGalleries[slug]?.[index]?.alt ?? `${serviceTitle} في مشروع بالرياض`)
+              : (rawServiceGalleries[slug]?.[index]?.alt ?? `صورة تطبيقية مؤقتة لخدمة ${slug}`),
+          };
+        }),
+      ];
+    },
+  ),
 );
 
 serviceGalleries["water-pools-riyadh"] = [
@@ -2184,6 +2365,7 @@ export type ServiceGroup = {
   heroTitle: string;
   heroDescription: string;
   image: string;
+  thumbnailImage?: string;
   imageAlt: string;
   icon: string;
   slugs: string[];
@@ -2195,29 +2377,24 @@ export const serviceGroups: ServiceGroup[] = [
     slug: "garden-landscape",
     title: "الحدائق واللاندسكيب",
     image: gardenDesign,
-    thumbnailImage: gardenDesignThumb,
+    thumbnailImage: serviceCardGardenLandscape,
     imageAlt: "حديقة منسقة بتصميم لاندسكيب متكامل في الرياض",
     icon: "leaf",
     desc: "تصميم وتنفيذ الحدائق والواجهات الخارجية، مع دمج المساحات الخضراء، الممرات، واللمسات الجمالية.",
     metaTitle: "الحدائق واللاندسكيب بالرياض | جنات الرياض",
     metaDescription:
-      "خدمات الحدائق واللاندسكيب بالرياض تشمل تنسيق الحدائق وHardscape وSoftscape والممرات والعناصر الجمالية للمساحات الخارجية.",
+      "خدمات الحدائق واللاندسكيب بالرياض تشمل تنسيق الحدائق وHardscape وSoftscape والممرات والتفاصيل الخارجية.",
     heroTitle: "الحدائق واللاندسكيب في الرياض",
     heroDescription:
       "نُنجز تصميمات متكاملة تجمع بين الجمال والوظيفة، بما يليق بالفلل والمنازل والاستراحات داخل الرياض.",
-    slugs: [
-      "tanseeq-hadaeq",
-      "amal-landscape",
-      "softscape-riyadh",
-      "pathways-flooring-riyadh",
-      "garden-aesthetic-elements",
-    ],
+    slugs: ["tanseeq-hadaeq", "amal-landscape", "softscape-riyadh", "pathways-flooring-riyadh"],
   },
   {
     id: "planting-gardening",
     slug: "planting-gardening",
     title: "الزراعة والتشجير",
     image: palms,
+    thumbnailImage: serviceCardPlantingGardening,
     imageAlt: "أشجار ونخيل منسقة في حديقة بالرياض",
     icon: "tree",
     desc: "زراعة الأشجار والنخيل والزهور بما يتناسب مع مناخ الرياض، مع تنسيق نباتي متوازن وجذّاب.",
@@ -2234,7 +2411,7 @@ export const serviceGroups: ServiceGroup[] = [
     slug: "turf-grass",
     title: "الثيل والعشب",
     image: naturalTurf,
-    thumbnailImage: naturalTurfThumb,
+    thumbnailImage: serviceCardNaturalTurfThumb,
     imageAlt: "مسطح ثيل طبيعي أخضر في حديقة بالرياض",
     icon: "grass",
     desc: "خدمات ثيل طبيعي، عشب صناعي، وجدران خضراء عصريّة بمواصفات رياضية وتصميمية متقدمة.",
@@ -2251,7 +2428,7 @@ export const serviceGroups: ServiceGroup[] = [
     slug: "garden-maintenance",
     title: "صيانة الحدائق",
     image: gardenMaintenanceTeam,
-    thumbnailImage: gardenMaintenanceTeamThumb,
+    thumbnailImage: serviceCardGardenMaintenanceThumb,
     imageAlt: "فريق متخصص أثناء صيانة حديقة بالرياض",
     icon: "scissors",
     desc: "إدارة وصيانة المساحات الخضراء، تشمل قص العشب، تقليم الأشجار، وتكريب النخيل.",
@@ -2268,6 +2445,7 @@ export const serviceGroups: ServiceGroup[] = [
     slug: "irrigation-systems",
     title: "شبكات الري",
     image: irrigation,
+    thumbnailImage: serviceImageFor("tanfeeth-shabakat-al-ray-yadawi"),
     imageAlt: "شبكة ري للحدائق في الرياض",
     icon: "droplets",
     desc: "تنفيذ وصيانة شبكات الري اليدوي، الأوتوماتيك، والتنقيط، مع فحص دوري لتحسين الاستهلاك والفعالية.",
@@ -2323,7 +2501,7 @@ export const serviceGroups: ServiceGroup[] = [
     slug: "shade-seating",
     title: "المظلات والسواتر والجلسات",
     image: pergola,
-    thumbnailImage: pergolaThumb,
+    thumbnailImage: serviceCardShadeSeating,
     imageAlt: "برجولة وجلسة خارجية في حديقة بالرياض",
     icon: "umbrella",
     desc: "جلسات ومظلات وبرجولات وغرف زجاجية بتصاميم عصرية، مع تركيز على الراحة والخصوصية في الهواء الطلق.",
@@ -2342,14 +2520,14 @@ export const serviceGroups: ServiceGroup[] = [
     image: planters,
     imageAlt: "أحواض زراعية منسقة في مساحة خارجية بالرياض",
     icon: "flower",
-    desc: "أحواض فايبر جلاس، حجرية، وبلوكية/خرسانية، مناسبة لزراعة نباتات مزينة أو إنتاجية في المساحات الخارجية.",
-    metaTitle: "الأحواض الزراعية بالرياض | أحواض فايبر جلاس وحجرية | جنات الرياض",
+    desc: "أحواض فايبر جلاس وبلوكية/خرسانية، مناسبة لزراعة نباتات مزينة أو إنتاجية في المساحات الخارجية.",
+    metaTitle: "الأحواض الزراعية بالرياض | أحواض فايبر جلاس وخرسانية | جنات الرياض",
     metaDescription:
-      "أحواض فايبر جلاس، حجرية، وبلوكية/خرسانية بالرياض لتنسيق المساحات الخارجية وصيانة النباتات وجمال الواجهة.",
+      "أحواض فايبر جلاس وبلوكية/خرسانية بالرياض لتنسيق المساحات الخارجية وصيانة النباتات وجمال الواجهة.",
     heroTitle: "الأحواض الزراعية في الرياض",
     heroDescription:
       "نصمم الأحواض النباتية بطريقة توفر التنسيق الجمالي مع التهوية المناسبة ونظام الري الذي يحافظ على صحّة النباتات.",
-    slugs: ["ahwad-fayber-glass", "ahwad-hajariya", "ahwad-blok-kharsaniya"],
+    slugs: ["ahwad-fayber-glass", "ahwad-blok-kharsaniya"],
   },
 ];
 export const legacyServiceAliases: Record<string, string> = {
