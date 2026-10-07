@@ -270,24 +270,6 @@ function ServiceDetail() {
                           />
                         </div>
                       ) : null}
-                      <div className="p-5">
-                        <h3 className="text-lg text-foreground">{section.title}</h3>
-                        <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                          {section.description}
-                        </p>
-                        {section.details?.length ? (
-                          <ul className="mt-4 flex flex-wrap gap-2">
-                            {section.details.map((detail) => (
-                              <li
-                                key={detail}
-                                className="rounded-full bg-secondary px-3 py-1 text-xs font-bold text-secondary-foreground"
-                              >
-                                {detail}
-                              </li>
-                            ))}
-                          </ul>
-                        ) : null}
-                      </div>
                     </article>
                   ))}
                 </div>
@@ -400,9 +382,6 @@ function ServiceDetail() {
                     loading="lazy"
                   />
                 </div>
-                <figcaption className="p-4 text-sm font-bold text-foreground">
-                  {item.alt}
-                </figcaption>
               </figure>
             ))}
           </div>
