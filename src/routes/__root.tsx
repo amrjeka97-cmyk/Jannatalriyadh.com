@@ -91,6 +91,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "robots", content: "index,follow" },
+      {
+        name: "google-site-verification",
+        content: "Buot6s-QdzSD8ax0oEtmNzX5L7ecG8zV7uxyGvl3e0k",
+      },
       { title: `${site.nameAr} | تنسيق حدائق ولاندسكيب بالرياض` },
       {
         name: "description",
