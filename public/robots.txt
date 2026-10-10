@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://jannat-alryad97.vercel.app/sitemap.xml
+Sitemap: https://jannatalryadh.netlify.app/sitemap.xml
